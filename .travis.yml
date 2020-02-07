@@ -2,15 +2,14 @@ language: node_js
 node_js:
 - '12.13'
 script:
-- if [ -n "${TRAVIS_TAG:-}" ]; 
-  then sed -r -i'' "s/\"1.0.0\"/\"${TRAVIS_TAG#v}\"/g" package.json; 
-  fi
+- if [ -n "${TRAVIS_TAG:-}" ]; then sed -r -i'' "s/\"1.0.0\"/\"${TRAVIS_TAG#v}\"/g"
+  package.json; fi
 - cat package.json
 deploy:
   provider: npm
   email: denisvcode
-  cleanup: false
+  api_key:
+    secure: jRTuEz3biVGUxwPMsTzWlL3W6ZAUjmSgVKeUWjLEF1m6CZ912jLpmgzigBlhtCFoVqExnAitFRpstT6IrOXtqTserapq+nurL9fV8AJQAERn5SA5xI7W60mh4ZD+ozb/9wk5YMwZXt1f293kXxucae6BcQte/MR9AZ8sKLR9V8C0bHwE/YQy/2kEycBOnuzXX18X8hx3rGQj+hH/AMa80gKUDgnoLsx8D/vaxiH39k69RSl/Z7PKksNiozcszGTG4Lu56m/kJxNeNQvmekICSMfHKYJP4M0HmVHy4ySi2mjbYX33n4sU0gChjE/EWAAaBwiPjt9xx3lwKmQmqspdyIYU8qNmBX5q2YAE7munvlFfFMGPzsQAIMuqTCaLrxmAR33m6tlsqf5LKjiyykaMa/QeBVrzGTXCwgYlLBQsbUTGfUdl5cKIefrWtun5Q+OdWfRiSA7IOUR1wYFJn1WLG2ZVqGzOR92ibZFc/z+td+k7grKYfnf7IqLhkJdtYfjs8pYDybRE6HIQaeMkTWvp+CX9ooSMoy9LQQ5HRpDhzVlsvafYNyuhq2EKS/I0Fv0vjutZ/Cc2cYFOuC6GTrcKYoGBeawSFDAma7tEj3QQI39xHuOu5mYUX97gIM3K4NX0/paXO3qQae9BfUOMXR5erfvYcEkb+VKP3akAO3vSYUY=
   on:
     tags: true
-  api_key:
-    secure: mc5u9IQmwHgnpVzcE5zlxH+QUrb4wRrnawn1Nx16ZxBDYQlTdBB5c2U54ReqxWxTQphdGBayZismGjD6OqFrU0DeBu6KR+PFWEYEP2Z96pep/MVyVRl/u1M4QVOZ0vtbKecgE6N/5gToOzd+r72qkIOCS1sjvOJcwK3aIjOKPsulUTFI7IFqs5n3OSnMeIG5RFfDYqhk+nNanjw+qfByvsBUtXPjk5z/5CuXx4o5ddzMKYQvwqU4Va6O2Bdg0YEdfwhiUaOlY8WSBKkLwN+BebrmOlpB5vzgVbzfThKewAxgAXHSdV1NCCkCxe26tfIHSJpRcY5J5ktC/AYci1aGLaKTrRIEE2rQdbAK1OQ5hoToAzoPV1u/RwpTdrO8V/9LDnuiOuFx0P1GwqJKgiYLunbYRmiab7o81zE1qMSEcI5fsl4+JyqW72NUJyRt8UX0b3WB56hyUN7Fxf1svTRdIxeId/KdHnktaq6xy6ysSmsaSXY/xgb41rfueqrBtJKJ+H2vpBpDNYB8UWS7uOWd3o9VQYjHRtmYZos9yyXvi3DhFuSqxWUXQFzju//03I4icCwQ34U0pNwXEm3n22vnSAu7E3myLpRz+JatJaz0MkcoN9UMrNJ3ZKP3c/Qq/WugT0RSh+4zbXtSka6OILKzswqRD7AsVwjUbv1ySaoDCU0=
+    repo: hardwario/node-red-contrib-hio-voice
