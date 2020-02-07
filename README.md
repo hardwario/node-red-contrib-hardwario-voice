@@ -12,7 +12,7 @@
 OS X & Linux & Windows
 
 ```sh
-npm install node-red-contrib-bigclown-ga --save
+npm install @hardwario/node-red-contrib-hio-voice --save
 ```
 
 ## Usage example
@@ -121,7 +121,7 @@ Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) i
 
 <!-- Markdown link & img dfn's -->
 
-[npm-image]: https://img.shields.io/npm/v/node-red-contrib-bigclown-ga.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/node-red-contrib-bigclown-ga
-[npm-downloads]: https://img.shields.io/npm/dm/node-red-contrib-bigclown-ga.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/@hardwario/node-red-contrib-hio-voice.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@hardwario/node-red-contrib-hio-voice
+[npm-downloads]: https://img.shields.io/npm/dm/@hardwario/node-red-contrib-hio-voice.svg?style=flat-square
 [wiki]: https://developers.hardwario.com/integrations/google-assistant

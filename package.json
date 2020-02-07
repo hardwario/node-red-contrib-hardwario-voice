@@ -1,6 +1,6 @@
 {
   "name": "@hardwario/node-red-contrib-hio-voice",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "This node enables you to better control the multifunctional industrial HARDWARIO IoT Kits with support for Google Assistant",
   "main": "hardwario/voice.js",
   "homepage": "https://www.hardwario.com/",
