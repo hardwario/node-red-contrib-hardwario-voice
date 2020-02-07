@@ -1,16 +1,16 @@
 language: node_js
 node_js:
-  - '12.13'
-
+- '12.13'
 script:
-  - if [ -n "${TRAVIS_TAG:-}" ]; then sed -r -i'' "s/\"1.0.0\"/\"${TRAVIS_TAG#v}\"/g" package.json; fi
-  - cat package.json
-
+- if [ -n "${TRAVIS_TAG:-}" ]; 
+  then sed -r -i'' "s/\"1.0.0\"/\"${TRAVIS_TAG#v}\"/g" package.json; 
+  fi
+- cat package.json
 deploy:
   provider: npm
-  email: blavka
+  email: denisvcode
   cleanup: false
   on:
     tags: true
   api_key:
-    secure: iyuVevGFlsNgXQZrWxFuxe/CWaZ/DCZAqWZrvZ/dUsUHQqB0IedFYP6lEF6qJvcco1XZ/jEc+LqrcwgiNpy18M7mgAhlrw3g+iVERygH+2yD1+h8CgjDcAx/xjomMpFthPQ7YL2Z/8mxuMxrS+GP2yCQu4mUGQBooRGZLbnPAdI/RMcn1e0pUtIwco0pL0oDT+fLbNDp2OXJnZVV/NkZ0TtMqemou7t9LX84thcovzNgGKuXB1x59C/3bvl4v/xPYgzg6zFEtfrhmRwxZqeYTfrnFFv125J80CEXsnzQ7hJB7tgTuD2nWEplTBrlCN4VjU2r+s73kLTQU1SEkfoNwRjAHGxRrO7stkxZsrjR5LFR//GpiP7AdfH6qHds75DV+of0NQOQnQ8/miGxIyEGn6fdOWtLBzyRpSl0S8yz3ArcNMgpJCrW0Rg1mz149G0KxbA3YTk6+T1IZN7oG8c4uQYdEJNgE3vYpVxadXFLBYCDBLIBrlcnR0HJx8QCB93OrW6v78ASJ8WYoh4dGKT+G8FIwSgTieggFDq6SnWTItUxM5UYkxVHeed8GiHKRTEv2OrLXAyRynAgPeq+gW04/SJE3/OpJciRxU3q0XrkPauNrdcYcQC2q5jUTtwpl3RmdEBssD7/Quzwzvb6BaPI/MqO1ncDG4UV1oU8lCeDReg=
+    secure: mc5u9IQmwHgnpVzcE5zlxH+QUrb4wRrnawn1Nx16ZxBDYQlTdBB5c2U54ReqxWxTQphdGBayZismGjD6OqFrU0DeBu6KR+PFWEYEP2Z96pep/MVyVRl/u1M4QVOZ0vtbKecgE6N/5gToOzd+r72qkIOCS1sjvOJcwK3aIjOKPsulUTFI7IFqs5n3OSnMeIG5RFfDYqhk+nNanjw+qfByvsBUtXPjk5z/5CuXx4o5ddzMKYQvwqU4Va6O2Bdg0YEdfwhiUaOlY8WSBKkLwN+BebrmOlpB5vzgVbzfThKewAxgAXHSdV1NCCkCxe26tfIHSJpRcY5J5ktC/AYci1aGLaKTrRIEE2rQdbAK1OQ5hoToAzoPV1u/RwpTdrO8V/9LDnuiOuFx0P1GwqJKgiYLunbYRmiab7o81zE1qMSEcI5fsl4+JyqW72NUJyRt8UX0b3WB56hyUN7Fxf1svTRdIxeId/KdHnktaq6xy6ysSmsaSXY/xgb41rfueqrBtJKJ+H2vpBpDNYB8UWS7uOWd3o9VQYjHRtmYZos9yyXvi3DhFuSqxWUXQFzju//03I4icCwQ34U0pNwXEm3n22vnSAu7E3myLpRz+JatJaz0MkcoN9UMrNJ3ZKP3c/Qq/WugT0RSh+4zbXtSka6OILKzswqRD7AsVwjUbv1ySaoDCU0=
