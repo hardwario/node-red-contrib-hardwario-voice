@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - '12.13'
+
+script:
+  - if [ -n "${TRAVIS_TAG:-}" ]; then sed -r -i'' "s/\"1.0.0\"/\"${TRAVIS_TAG#v}\"/g" package.json; fi
+  - cat package.json
+
+deploy:
+  provider: npm
+  email: blavka
+  cleanup: false
+  on:
+    tags: true
+  api_key:
+    secure: iyuVevGFlsNgXQZrWxFuxe/CWaZ/DCZAqWZrvZ/dUsUHQqB0IedFYP6lEF6qJvcco1XZ/jEc+LqrcwgiNpy18M7mgAhlrw3g+iVERygH+2yD1+h8CgjDcAx/xjomMpFthPQ7YL2Z/8mxuMxrS+GP2yCQu4mUGQBooRGZLbnPAdI/RMcn1e0pUtIwco0pL0oDT+fLbNDp2OXJnZVV/NkZ0TtMqemou7t9LX84thcovzNgGKuXB1x59C/3bvl4v/xPYgzg6zFEtfrhmRwxZqeYTfrnFFv125J80CEXsnzQ7hJB7tgTuD2nWEplTBrlCN4VjU2r+s73kLTQU1SEkfoNwRjAHGxRrO7stkxZsrjR5LFR//GpiP7AdfH6qHds75DV+of0NQOQnQ8/miGxIyEGn6fdOWtLBzyRpSl0S8yz3ArcNMgpJCrW0Rg1mz149G0KxbA3YTk6+T1IZN7oG8c4uQYdEJNgE3vYpVxadXFLBYCDBLIBrlcnR0HJx8QCB93OrW6v78ASJ8WYoh4dGKT+G8FIwSgTieggFDq6SnWTItUxM5UYkxVHeed8GiHKRTEv2OrLXAyRynAgPeq+gW04/SJE3/OpJciRxU3q0XrkPauNrdcYcQC2q5jUTtwpl3RmdEBssD7/Quzwzvb6BaPI/MqO1ncDG4UV1oU8lCeDReg=
