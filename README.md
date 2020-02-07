@@ -12,7 +12,7 @@
 OS X & Linux & Windows
 
 ```sh
-npm install @hardwario/node-red-contrib-hio-voice --save
+npm install @hardwario/node-red-contrib-hardwario-voice --save
 ```
 
 ## Usage example
@@ -121,7 +121,7 @@ Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) i
 
 <!-- Markdown link & img dfn's -->
 
-[npm-image]: https://img.shields.io/npm/v/@hardwario/node-red-contrib-hio-voice.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/@hardwario/node-red-contrib-hio-voice
-[npm-downloads]: https://img.shields.io/npm/dm/@hardwario/node-red-contrib-hio-voice.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/@hardwario/node-red-contrib-hardwario-voice.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@hardwario/node-red-contrib-hardwario-voice
+[npm-downloads]: https://img.shields.io/npm/dm/@hardwario/node-red-contrib-hardwario-voice.svg?style=flat-square
 [wiki]: https://developers.hardwario.com/integrations/google-assistant
