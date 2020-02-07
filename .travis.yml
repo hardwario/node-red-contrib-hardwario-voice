@@ -8,8 +8,8 @@ script:
 deploy:
   provider: npm
   email: denisvcode
+  skip_cleanup: true
   api_key:
     secure: jRTuEz3biVGUxwPMsTzWlL3W6ZAUjmSgVKeUWjLEF1m6CZ912jLpmgzigBlhtCFoVqExnAitFRpstT6IrOXtqTserapq+nurL9fV8AJQAERn5SA5xI7W60mh4ZD+ozb/9wk5YMwZXt1f293kXxucae6BcQte/MR9AZ8sKLR9V8C0bHwE/YQy/2kEycBOnuzXX18X8hx3rGQj+hH/AMa80gKUDgnoLsx8D/vaxiH39k69RSl/Z7PKksNiozcszGTG4Lu56m/kJxNeNQvmekICSMfHKYJP4M0HmVHy4ySi2mjbYX33n4sU0gChjE/EWAAaBwiPjt9xx3lwKmQmqspdyIYU8qNmBX5q2YAE7munvlFfFMGPzsQAIMuqTCaLrxmAR33m6tlsqf5LKjiyykaMa/QeBVrzGTXCwgYlLBQsbUTGfUdl5cKIefrWtun5Q+OdWfRiSA7IOUR1wYFJn1WLG2ZVqGzOR92ibZFc/z+td+k7grKYfnf7IqLhkJdtYfjs8pYDybRE6HIQaeMkTWvp+CX9ooSMoy9LQQ5HRpDhzVlsvafYNyuhq2EKS/I0Fv0vjutZ/Cc2cYFOuC6GTrcKYoGBeawSFDAma7tEj3QQI39xHuOu5mYUX97gIM3K4NX0/paXO3qQae9BfUOMXR5erfvYcEkb+VKP3akAO3vSYUY=
   on:
     tags: true
-    repo: hardwario/node-red-contrib-hio-voice
