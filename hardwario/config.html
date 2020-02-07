@@ -1,0 +1,27 @@
+<script type="text/javascript">
+  RED.nodes.registerType("hardwario-config", {
+    category: "config",
+    defaults: {
+      name: { value: "HARDWARIO Auth token", required: false },
+      phrase: { value: "", required: true }
+    },
+    label: function() {
+      return this.name;
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="hardwario-config">
+    <div class="form-row">
+      <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
+      <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-phrase"><i class="icon-bookmark"></i> Auth Token</label>
+        <input type="text" id="node-config-input-phrase" placeholder="Ex: 9993752049233564218331">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="hardwario-config">
+  <p>Configuration node takes care of authentication, paste your HARDWARIO Auth Token here. You will find it in your email.</p>
+</script>

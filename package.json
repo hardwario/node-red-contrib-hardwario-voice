@@ -1,0 +1,35 @@
+{
+  "name": "@hardwario/node-red-contrib-hio-voice",
+  "version": "1.0.0",
+  "description": "This node enables you to better control the multifunctional industrial HARDWARIO IoT Kits with support for Google Assistant",
+  "main": "hardwario/voice.js",
+  "homepage": "https://www.hardwario.com/",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iot",
+    "hardwario",
+    "smart-home",
+    "node-red"
+  ],
+  "author": "HARDWARIO",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^6.5.0",
+    "@node-red/runtime": "^0.20.7"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.12",
+    "@types/node-red": "^0.20.0"
+  },
+  "node-red": {
+    "nodes": {
+      "hardwario-voice": "hardwario/voice.js",
+      "hardwario-config": "hardwario/config.js"
+    }
+  },
+  "engines": {
+    "node": ">=8"
+  }
+}
