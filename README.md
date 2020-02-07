@@ -98,11 +98,6 @@ Paste this flow into the Node-RED:
 
 _For more examples and usage, please refer to the [Docs][wiki]._
 
-## Release History
-
-- 1.0.0
-  - Release
-
 ## Meta
 
 Distributed under the MIT license. See `LICENSE` for more information.
