@@ -31,7 +31,7 @@ module.exports = function(RED) {
             node.send(response.body);
             isConnected = true;
           } else if (response.status === 400) {
-            this.status({ fill: "red", shape: "ring", text: "Pairing error" });
+            node.status({ fill: "red", shape: "ring", text: "Pairing error" });
             isConnected = false;
             console.log(`Error: ${response.body.payload}`);
             return node.send(response.body);
@@ -44,56 +44,69 @@ module.exports = function(RED) {
               payload: "Pairing failed, check the Auth token."
             });
           }
-          db.collection(`users/${phrase}/updates`).onSnapshot(function(
-            querySnapshot
-          ) {
-            querySnapshot.docChanges().forEach(function(change) {
-              if (change.type === "added") {
-                const msg = {};
-                msg.payload = change.doc.data().payload;
-                msg.topic = change.doc.data().topic;
-                msg.fromGA = change.doc.data().fromGA;
-                if (
-                  lastSentMessage.topic === msg.topic &&
-                  lastSentMessage.payload === msg.payload
-                ) {
+          const receiver = db
+            .collection(`users/${phrase}/updates`)
+            .onSnapshot(function(querySnapshot) {
+              querySnapshot.docChanges().forEach(function(change) {
+                if (change.type === "added") {
+                  const msg = {};
+                  msg.payload = change.doc.data().payload;
+                  msg.topic = change.doc.data().topic;
+                  msg.fromGA = change.doc.data().fromGA;
+                  if (
+                    lastSentMessage.topic === msg.topic &&
+                    lastSentMessage.payload === msg.payload
+                  ) {
+                    return db
+                      .doc(`users/${phrase}/updates/${change.doc.id}`)
+                      .delete()
+                      .then(() => {
+                        return;
+                      })
+                      .catch(error => {
+                        console.log(error);
+                        node.status({
+                          fill: "red",
+                          shape: "ring",
+                          text: "error"
+                        });
+                      });
+                  }
+                  lastSentMessage = { topic: msg.topic, payload: msg.payload };
+
                   return db
                     .doc(`users/${phrase}/updates/${change.doc.id}`)
                     .delete()
                     .then(() => {
-                      return;
+                      console.log(`Sending ${JSON.stringify(msg)}`);
+                      if (msg.topic === "node/assistant/disconnect") {
+                        node.status({
+                          fill: "red",
+                          shape: "ring",
+                          text: msg.payload
+                        });
+                        node.send(msg);
+                        receiver();
+                      }
+                      return node.send(msg);
                     })
                     .catch(error => {
                       console.log(error);
-                      this.status({
+                      node.status({
                         fill: "red",
                         shape: "ring",
                         text: "error"
                       });
                     });
                 }
-                lastSentMessage = { topic: msg.topic, payload: msg.payload };
-
-                return db
-                  .doc(`users/${phrase}/updates/${change.doc.id}`)
-                  .delete()
-                  .then(() => {
-                    console.log(`Sending ${JSON.stringify(msg)}`);
-                    return node.send(msg);
-                  })
-                  .catch(error => {
-                    console.log(error);
-                    this.status({ fill: "red", shape: "ring", text: "error" });
-                  });
-              }
+              });
             });
-          });
-          this.status({ fill: "green", shape: "dot", text: "connected" });
+          node.status({ fill: "green", shape: "dot", text: "connected" });
         })
         .catch(error => {
           console.log(`Pairing error: ` + error);
           isConnected = false;
-          this.status({ fill: "red", shape: "ring", text: "Pairing error" });
+          node.status({ fill: "red", shape: "ring", text: "Pairing error" });
         });
 
       node.on("input", function(msg) {
@@ -115,7 +128,7 @@ module.exports = function(RED) {
         }
       });
     } else {
-      this.status({ fill: "red", shape: "ring", text: "Missing token" });
+      node.status({ fill: "red", shape: "ring", text: "Missing token" });
       return;
     }
   }
