@@ -33,7 +33,9 @@
   "node-red": {
     "nodes": {
       "hardwario-voice": "hardwario/voice.js",
-      "hardwario-config": "hardwario/config.js"
+      "hardwario-config": "hardwario/config.js",
+      "hardwario-scene": "hardwario/scene.js",
+      "hardwario-scene-config": "hardwario/scene-config.js"
     }
   },
   "engines": {

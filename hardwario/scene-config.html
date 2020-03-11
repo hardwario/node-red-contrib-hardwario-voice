@@ -1,0 +1,167 @@
+<script type="text/javascript">
+  function onEditSave() {
+    this.changed = true;
+    console.log({ this: this });
+  }
+
+  function checkIfArray(arr) {
+    try {
+      let obj = JSON.stringify(arr);
+      obj = JSON.parse(obj);
+      obj = JSON.parse(obj);
+
+      if (Array.isArray(obj)) {
+        let isOkay = true;
+        obj.forEach(element => {
+          if (
+            element.payload === null ||
+            element.topic === null ||
+            element.topic === undefined ||
+            element.payload === undefined
+          ) {
+            isOkay = false;
+          }
+        });
+
+        if (isOkay) {
+          return { obj: obj, valid: true };
+        } else {
+          return { obj: null, valid: false };
+        }
+      } else {
+        return { obj: null, valid: false };
+      }
+    } catch (error) {
+      console.log(error);
+      return { obj: null, valid: false };
+    }
+  }
+
+  function onEditPrepare() {
+    $("#node-config-input-reversible")
+      .on("change", function onQueueChange() {
+        if (this.checked) {
+          this.checked = true;
+          $("#reversible-details").show();
+          $("#reversible-details").attr("checked", true);
+        } else {
+          this.checked = false;
+          $("#reversible-details").hide();
+          $("#reversible-details").attr("checked", false);
+        }
+      })
+      .change();
+    $("#node-config-input-commandsType").val("json");
+    $("#node-config-input-reverseCommandsType").val("json");
+
+    $("#node-config-input-commands").typedInput({
+      default: "json",
+      typeField: $("#node-config-input-commandsType"),
+      types: ["json"]
+    });
+
+    $("#node-config-input-reverseCommands").typedInput({
+      default: "json",
+      typeField: $("#node-config-input-reverseCommandsType"),
+      types: ["json"]
+    });
+  }
+
+  RED.nodes.registerType("hardwario-scene-config", {
+    category: "config",
+    color: "#E30427",
+    defaults: {
+      name: {
+        value: "",
+        required: true,
+        validate: function(v) {
+          return v.length > 0;
+        }
+      },
+      nicknames: {
+        value: "",
+        required: false
+      },
+      reversible: { value: false },
+      reverseCommands: {
+        value: "",
+        validate: function(v) {
+          var revEnabled = $("#reversible-details").attr("checked");
+          return revEnabled ? checkIfArray(v.replace(/'/g, '"')).valid : true;
+        },
+        required: function(v) {
+          return $("#reversible-details").attr("checked");
+        }
+      },
+      commandsType: {
+        value: "json"
+      },
+      reverseCommandsType: {
+        value: "json"
+      },
+      commands: {
+        value: "",
+        validate: function(v) {
+          return checkIfArray(v.replace(/'/g, '"')).valid;
+        },
+        required: true
+      }
+    },
+    label: function() {
+      return this.name || "Scene";
+    },
+    oneditsave: onEditSave,
+    oneditprepare: onEditPrepare
+  });
+</script>
+
+<script type="text/x-red" data-template-name="hardwario-scene-config">
+  <div class="form-row">
+      <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+      <input type="text" id="node-config-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+      <label for="node-config-input-nicknames"><i class="icon-tag"></i> Nicknames</label>
+      <input type="text" id="node-config-input-nicknames" placeholder="Nicknames">
+  </div>
+  <div class="form-row">
+      <label for="node-config-input-commands"><i class="fa fa-wrench"></i> Commands</label>
+      <input type="text" id="node-config-input-commands" placeholder="Commands">
+      <input type="select" id="node-config-input-commandsType">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-reversible"><i class="fa fa-ellipsis-h"></i> <span>Reversible</span></label>
+    <input type="checkbox" id="node-config-input-reversible" style="width: 30px;" >
+    <label style="width: 250px; opacity: 1;" for="node-config-input-reversible">Enable scene to be deactivated</label>
+  </div>
+  <div class="form-row" id="reversible-details">
+    <label for="node-config-input-reverseCommands"><i class="fa fa-wrench"></i> Reverse commands</label>
+    <input type="text" id="node-config-input-reverseCommands" placeholder="Reverse commands" style="width: 80%;">
+    <input type="select" id="node-config-input-reverseCommandsType">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="hardwario-scene-config">
+  <p>Configuration node where you can setup custom scenes, which can be later activated using Google Assistant by saying "Activate {name}". </p>
+
+  <h3>Details</h3>
+   <b>Name</b><span class="property-type"> [string]</span>
+    <p>You will use this name to activate the scene </p>
+   <b>Nicknames</b><span class="property-type"> [string]</span>
+    <p>Synonyms you can use to activate the scene. You can separate multiple nicknames using "," ("nickname, nickname2")</p>
+   <b>Commands</b><span class="property-type"> [JSON]</span>
+    <p>MQTT messages in JSON, that you want to sent when scene is activated</p>
+    Example: <code>[{"payload": '"#ffffff"',
+       "topic": "node/power-controller:0/led-strip/-/color/set"}]</code><br>
+
+   <b>Reversible</b>
+    <p>Check if you want to send different commands with "Deactivate {name}"</p>
+   <b>Reverse commands</b><span class="property-type"> [JSON]</span>
+    <p>MQTT messages in JSON, that you want to sent when scene is deactivated</p>
+   Example: <code>[{"payload": '"#000000"',
+      "topic": "node/power-controller:0/led-strip/-/color/set"}]</code>
+   <h3>References</h3>
+     <ul>
+       <li><a href="https://developers.hardwario.com/integrations/google-assistant">Docs</a> - the nodes documentation</li>
+     </ul>
+</script>
