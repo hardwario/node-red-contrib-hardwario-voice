@@ -6,10 +6,20 @@
 
   function checkIfArray(arr) {
     try {
+      let replacing = /\""(.*?)\""/g;
+      let replacedData = arr.match(replacing);
+      if (replacedData && replacedData.length > 0) {
+        for (let i = 0; i < replacedData.length; i++) {
+          const elem = replacedData[i];
+
+          let parsed = '"&' + elem.substring(2, elem.length - 2) + '&"';
+          arr = arr.replace(elem, parsed);
+        }
+      }
+
       let obj = JSON.stringify(arr);
       obj = JSON.parse(obj);
       obj = JSON.parse(obj);
-
       if (Array.isArray(obj)) {
         let isOkay = true;
         obj.forEach(element => {
@@ -20,10 +30,13 @@
             element.payload === undefined
           ) {
             isOkay = false;
+          } else {
+            element.payload = element.payload.replace(/&/g, '"');
           }
         });
 
         if (isOkay) {
+          console.log(obj);
           return { obj: obj, valid: true };
         } else {
           return { obj: null, valid: false };

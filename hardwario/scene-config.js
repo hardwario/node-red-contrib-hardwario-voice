@@ -1,10 +1,20 @@
 module.exports = function(RED) {
   function checkIfArray(arr) {
     try {
+      let replacing = /\""(.*?)\""/g;
+      let replacedData = arr.match(replacing);
+      if (replacedData && replacedData.length > 0) {
+        for (let i = 0; i < replacedData.length; i++) {
+          const elem = replacedData[i];
+
+          let parsed = '"&' + elem.substring(2, elem.length - 2) + '&"';
+          arr = arr.replace(elem, parsed);
+        }
+      }
+
       let obj = JSON.stringify(arr);
       obj = JSON.parse(obj);
       obj = JSON.parse(obj);
-
       if (Array.isArray(obj)) {
         let isOkay = true;
         obj.forEach(element => {
@@ -15,6 +25,8 @@ module.exports = function(RED) {
             element.payload === undefined
           ) {
             isOkay = false;
+          } else {
+            element.payload = element.payload.replace(/&/g, '"');
           }
         });
 
@@ -48,9 +60,11 @@ module.exports = function(RED) {
       }
 
       if (reversible && reverseCommands) {
-        const reverseCommandsData = checkIfArray(reverseCommands.replace(/'/g, '"'));
+        const reverseCommandsData = checkIfArray(
+          reverseCommands.replace(/'/g, '"')
+        );
         if (reverseCommandsData.valid) {
-          cmds = reverseCommandsData.obj;
+          reverseCmds = reverseCommandsData.obj;
         } else {
           msg.valid = false;
           msg.reason = "Invalid JSON - reverse commands";

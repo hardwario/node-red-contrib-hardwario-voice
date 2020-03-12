@@ -3,37 +3,24 @@ module.exports = function(RED) {
   var globalNode;
   var sceneConfig;
   var fs = require("fs");
+  var fileExists = false;
 
-  function SceneNode(config) {
-    RED.nodes.createNode(this, config);
-    globalConfig = config;
-    globalNode = this;
-    sceneConfig = RED.nodes.getNode(globalConfig.scene);
-
-    if (!sceneConfig) {
-      this.status({
-        fill: "red",
-        shape: "ring",
-        text: "Missing scene settings"
-      });
-      return;
-    }
-
-    const msg = sceneConfig.msg;
+  function checkFile(msg) {
     fs.readFile("message.json", "utf-8", (err, data) => {
       if (err) {
         console.log(err);
       }
+
       data = JSON.parse(data);
       if (msg.payload !== data.payload) {
         if (msg.valid) {
-          this.status({
+          globalNode.status({
             fill: "red",
             shape: "dot",
             text: "Press to update"
           });
         } else {
-          this.status({
+          globalNode.status({
             fill: "red",
             shape: "dot",
             text: msg.reason
@@ -47,6 +34,34 @@ module.exports = function(RED) {
         });
       }
     });
+  }
+
+  function SceneNode(config) {
+    RED.nodes.createNode(this, config);
+    globalConfig = config;
+    globalNode = this;
+    sceneConfig = RED.nodes.getNode(globalConfig.scene);
+    if (!sceneConfig) {
+      this.status({
+        fill: "red",
+        shape: "ring",
+        text: "Missing scene settings"
+      });
+      return;
+    }
+
+    const msg = sceneConfig.msg;
+    if (!fileExists) {
+      fs.writeFile("message.json", "[]", { flag: "wx" }, function(err) {
+        if (err) {
+          fileExists = true;
+        }
+        fileExists = true;
+        checkFile(msg);
+      });
+    } else {
+      checkFile(msg);
+    }
 
     this.on("input", function(msg) {
       this.status({
