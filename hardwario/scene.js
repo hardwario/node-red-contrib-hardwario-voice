@@ -1,8 +1,10 @@
+
 module.exports = function(RED) {
   var globalConfig;
   var globalNode;
   var sceneConfig;
   var fs = require("fs");
+
   var fileExists = false;
 
   function checkFile(msg) {

@@ -1,49 +1,5 @@
+import { checkIfArray } from "./utils";
 module.exports = function(RED) {
-  function checkIfArray(arr) {
-    try {
-      let replacing = /\""(.*?)\""/g;
-      let replacedData = arr.match(replacing);
-      if (replacedData && replacedData.length > 0) {
-        for (let i = 0; i < replacedData.length; i++) {
-          const elem = replacedData[i];
-
-          let parsed = '"&' + elem.substring(2, elem.length - 2) + '&"';
-          arr = arr.replace(elem, parsed);
-        }
-      }
-
-      let obj = JSON.stringify(arr);
-      obj = JSON.parse(obj);
-      obj = JSON.parse(obj);
-      if (Array.isArray(obj)) {
-        let isOkay = true;
-        obj.forEach(element => {
-          if (
-            element.payload === null ||
-            element.topic === null ||
-            element.topic === undefined ||
-            element.payload === undefined
-          ) {
-            isOkay = false;
-          } else {
-            element.payload = element.payload.replace(/&/g, '"');
-          }
-        });
-
-        if (isOkay) {
-          return { obj: obj, valid: true };
-        } else {
-          return { obj: null, valid: false };
-        }
-      } else {
-        return { obj: null, valid: false };
-      }
-    } catch (error) {
-      console.log(error);
-      return { obj: null, valid: false };
-    }
-  }
-
   function SceneConfigNode(config) {
     RED.nodes.createNode(this, config);
     const { name, nicknames, reversible, reverseCommands, commands } = config;
@@ -51,7 +7,7 @@ module.exports = function(RED) {
     msg.valid = true;
     let reverseCmds, cmds;
     try {
-      const arrData = checkIfArray(commands.replace(/'/g, '"'));
+      const arrData = checkIfArray(commands);
       if (arrData.valid) {
         cmds = arrData.obj;
       } else {
@@ -60,9 +16,7 @@ module.exports = function(RED) {
       }
 
       if (reversible && reverseCommands) {
-        const reverseCommandsData = checkIfArray(
-          reverseCommands.replace(/'/g, '"')
-        );
+        const reverseCommandsData = checkIfArray(reverseCommands);
         if (reverseCommandsData.valid) {
           reverseCmds = reverseCommandsData.obj;
         } else {

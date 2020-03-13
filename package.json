@@ -12,7 +12,7 @@
     "url": "https://github.com/hardwario/node-red-contrib-hardwario-voice/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./test/**/*.spec.js"
   },
   "keywords": [
     "iot",
@@ -23,12 +23,14 @@
   "author": "HARDWARIO",
   "license": "MIT",
   "dependencies": {
-    "firebase": "^6.5.0",
-    "@node-red/runtime": "^0.20.7"
+    "@node-red/runtime": "^0.20.7",
+    "firebase": "^6.5.0"
   },
   "devDependencies": {
     "@types/node": "^12.0.12",
-    "@types/node-red": "^0.20.0"
+    "@types/node-red": "^0.20.0",
+    "node-red": "^1.0.4",
+    "node-red-node-test-helper": "^0.2.3"
   },
   "node-red": {
     "nodes": {
