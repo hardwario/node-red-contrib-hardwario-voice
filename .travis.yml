@@ -5,6 +5,8 @@ script:
 - if [ -n "${TRAVIS_TAG:-}" ]; then sed -r -i'' "s/\"1.0.0\"/\"${TRAVIS_TAG#v}\"/g"
   package.json; fi
 - cat package.json
+- npm install
+- npm test
 deploy:
   provider: npm
   email: denisvcode
