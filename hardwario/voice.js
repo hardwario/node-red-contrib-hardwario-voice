@@ -21,25 +21,33 @@ module.exports = function(RED) {
     if (this.configNode.phrase) {
       const phrase = this.configNode.phrase;
       this.status({ fill: "yellow", shape: "ring", text: "Connecting ..." });
+      let statusCode = 200;
       fetch(
         `https://us-central1-bigclown-e3802.cloudfunctions.net/updateModulesOnPairingFn?userId=${phrase}&version=${encodeURIComponent(
           pjson.version
         )}`
       )
+        .then(res => {
+          statusCode = res.status;
+          return res.json();
+        })
         .then(response => {
-          if (response.status === 200) {
-            node.send(response.body);
+          console.log(response);
+          if (statusCode === 200) {
+            node.send(response);
             isConnected = true;
-          } else if (response.status === 400) {
+          } else if (statusCode === 400) {
             node.status({ fill: "red", shape: "ring", text: "Pairing error" });
             isConnected = false;
-            console.log(`Error: ${response.body.payload}`);
-            return node.send(response.body);
+            console.log(`Error: ${response.payload}`);
+            return node.send(response);
+          } else if (statusCode === 201) {
+            node.send(response);
           } else {
             this.status({ fill: "red", shape: "ring", text: "Pairing error" });
             isConnected = false;
             console.log(`Error: Pairing failed, check the Auth token.`);
-            return node.send({
+            node.send({
               topic: "node/assistant/error",
               payload: "Pairing failed, check the Auth token."
             });
@@ -92,6 +100,7 @@ module.exports = function(RED) {
                     })
                     .catch(error => {
                       console.log(error);
+                      node.error();
                       node.status({
                         fill: "red",
                         shape: "ring",
