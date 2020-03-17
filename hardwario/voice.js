@@ -2,7 +2,7 @@ module.exports = function(RED) {
   const firebase = require("firebase");
   const firestore = require("firebase/firestore");
   const pjson = require("../package.json");
-
+  
   firebase.initializeApp({
     apiKey: "AIzaSyBZn9O5CeqsiJLKsKXwyEoWG7VNP0Cs3lY",
     authDomain: "AIzaSyBZn9O5CeqsiJLKsKXwyEoWG7VNP0Cs3lY",

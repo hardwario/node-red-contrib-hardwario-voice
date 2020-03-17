@@ -1,5 +1,5 @@
-import { checkIfArray } from "./utils";
 module.exports = function(RED) {
+  const { checkIfArray } = require("./utils");
   function SceneConfigNode(config) {
     RED.nodes.createNode(this, config);
     const { name, nicknames, reversible, reverseCommands, commands } = config;
