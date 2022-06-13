@@ -104,7 +104,7 @@ Distributed under the MIT license. See `LICENSE` for more information.
 
 ---
 
-Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) in the heart of Europe.
+Made with &#x2764;&nbsp; by [**HARDWARIO a.s.**](https://www.hardwario.com/) in the heart of Europe.
 
 <!-- Markdown link & img dfn's -->
 
